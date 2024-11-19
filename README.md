@@ -24,11 +24,13 @@ To call this microservice the request and reply should be bound to the same port
 
 Request
 
+```
 const socket = new zmq.Request();
 await socket.connect('tcp://127.0.0.1:5555');
 
 Reply
 
+```
 const socket = new zmq.Reply();
 await socket.bind('tcp://127.0.0.1:5555');
 
