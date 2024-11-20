@@ -18,25 +18,29 @@ The microservices uses MongoDB to store information into a database.
 
 #Communication Contract
 
-To call this microservice the request and reply should be bound to the same port 5555 using TCP protocol. 
+To call this microservice the request and reply should be bound to the same port 5555 using TCP protocol. Reply should use bind to make the server availble for the request to connect to. And the request should use connect to connect to the server that the microservice is already running on. 
 
 #Example 
 
 Request
 
+```
 const socket = new zmq.Request();
 await socket.connect('tcp://127.0.0.1:5555');
+```
 
 Reply
 
+```
 const socket = new zmq.Reply();
 await socket.bind('tcp://127.0.0.1:5555');
-
+```
 
 Sending a request:
 
-To request information, first you must have a schema you want to represent using a type, email, and password which should all be represented as strings. The schema outline must be created using mongoose to tell mongoDB what variables it should be reading. The schema will then be sent in json format to the microservice through the port 5555 which is done by await socket.send(JSON.stringify(“NAME OF SCHEMA”));. 
+To request information, first you must have a schema you want to represent using a type, email, and password which should all be represented as strings. The schema outline must be created using mongoose to tell mongoDB what variables it should be reading. The schema will then be sent in json format to the microservice through the port 5555 which is done by `await socket.send(JSON.stringify(“NAME OF SCHEMA”));`. 
 
+```
 const signupData = {
         type: 'signup',
         schemaData: {
@@ -46,10 +50,11 @@ const signupData = {
     };
    
     await socket.send(JSON.stringify(signupData));
+```
 
 MongoDB Schema Representation
 
-
+```
 const account = new mongoose.Schema({
     email: {
         type:String,
@@ -60,12 +65,13 @@ const account = new mongoose.Schema({
         required:true
     }
 })
-
+```
 
 Receiving response:
 
 Once the microservice has parsed the schema sent from the client and determined if the data type is ‘signin’ or ‘login’, the microservice will send a response success message either ‘true’ or ‘false’. To receive the response, you will need to use await socket.receive() which will hold the message given by the microservice. Below is an example of the request and response working together. 
 
+```
 const loginDataSuccess = {
         type: 'login',
         schemaData: {
@@ -76,5 +82,6 @@ const loginDataSuccess = {
 
 
 await socket.send(JSON.stringify(loginDataSuccess)); // Send the login request
-const [loginResponseSuccess] = await socket.receive(); // Receive the response
+let [loginResponseSuccess] = await socket.receive(); // Receive the response
 console.log("Successful Login Response:",loginResponseSuccess.toString()); //Print the response to the console
+```
