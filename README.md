@@ -85,3 +85,6 @@ await socket.send(JSON.stringify(loginDataSuccess)); // Send the login request
 let [loginResponseSuccess] = await socket.receive(); // Receive the response
 console.log("Successful Login Response:",loginResponseSuccess.toString()); //Print the response to the console
 ```
+
+#UML Image
+(/UMLimage)
