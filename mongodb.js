@@ -3,7 +3,7 @@ import { default as mongoose } from "mongoose"
 mongoose.connect(credentails.connection_string);
 
 
-const LogInSchema = new mongoose.Schema({
+const account = new mongoose.Schema({
     email: {
         type:String,
         required:true
@@ -15,7 +15,7 @@ const LogInSchema = new mongoose.Schema({
 })
 
 
-const collection = new mongoose.model("LogInCollection", LogInSchema)
+const collection = new mongoose.model("LogInCollection", account)
 
 
 export default collection;

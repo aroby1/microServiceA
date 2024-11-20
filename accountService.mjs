@@ -1,17 +1,14 @@
 import zmq from 'zeromq';
 import collection from './mongodb.js'; // Import your MongoDB connection
 
-
-const socket = new zmq.Reply();
-
-
 const startService = async () => {
-    await socket.bind('tcp://127.0.0.1:5555'); // Bind to a port
+    const socket = new zmq.Reply();
+    await socket.bind('tcp://127.0.0.1:5555');
     console.log('Account Service running on port 5555');
 
 
-    for await (const [msg] of socket) {
-        const data = JSON.parse(msg.toString());
+    for await (const [message] of socket) {
+        const data = JSON.parse(message.toString());
         console.log("Received message:", data);
 
 
