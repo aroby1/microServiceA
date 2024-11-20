@@ -87,4 +87,4 @@ console.log("Successful Login Response:",loginResponseSuccess.toString()); //Pri
 ```
 
 #UML Image
-[UML Diagram](UMLimage.pdf)
+[UML Diagram](UMLimage.png)
