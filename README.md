@@ -18,7 +18,7 @@ The microservices uses MongoDB to store information into a database.
 
 #Communication Contract
 
-To call this microservice the request and reply should be bound to the same port 5555 using TCP protocol. 
+To call this microservice the request and reply should be bound to the same port 5555 using TCP protocol. Reply should use bind to make the server availble for the request to connect to. And the request should use connect to connect to the server that the microservice is already running on. 
 
 #Example 
 
